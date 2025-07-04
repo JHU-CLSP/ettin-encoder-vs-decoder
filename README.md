@@ -260,6 +260,9 @@ For details on model pre-training, data preparation, and training recipes:
 #### Decoder Evaluation
 - **🎯 [Decoder on Generative Tasks](docs/decoder-eval.md)** - Using EleutherAI evaluation harness (commit `867413f8677f00f6a817262727cbb041bf36192a`) for comprehensive generative task evaluation
 
+#### Bias Evaluation
+- **⚖️ [Gender Bias Evaluation](bias_eval/README.md)** - Comprehensive gender bias testing using Winogender dataset gotcha examples. Tests how well models handle counter-stereotypical pronouns in occupational contexts. Supports both encoder (MLM) and decoder (perplexity) evaluation methods.
+
 ### Quick Decoder Evaluation Example
 
 ```bash
