@@ -101,7 +101,7 @@ The repository also includes scripts for training cross-objective models:
 ## Hardware Requirements
 All models are trained on 4x H100s. Training time is approximately:
 
-1B: 2170 hours (~90 days)
+1B: 2170 hours to do 2T (~90 days, we did only ~40)
 400M: 950 hours (~40 days)
 150M: 470 hours (~20 days)
 68M: 300 hours (~13 days)
