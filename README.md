@@ -1,13 +1,13 @@
 # Ettin: an Open Suite of Paired Encoders and Decoders
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Paper](https://img.shields.io/badge/Paper-Coming%20Soon-red)](https://github.com/jhu-clsp/ettin-encoder-vs-decoder)
+[![Paper](https://img.shields.io/badge/Paper-Arxiv-red)](https://arxiv.org/abs/2507.11412)
 [![Models](https://img.shields.io/badge/🤗%20Hugging%20Face-24%20Models-blue)](https://huggingface.co/jhu-clsp)
 [![Data](https://img.shields.io/badge/🤗%20Training%20Data-2T%20Tokens-green)](https://huggingface.co/datasets/jhu-clsp)
 
 > 🎯 **TL;DR**: State-of-the-art paired encoder and decoder models (17M-1B params) trained identically for fair comparison with open data. Encoders beat ModernBERT. Decoders beat Llama 3.2/SmolLM2.
 
-📄 [Paper (Coming Soon)](https://github.com/jhu-clsp/ettin-encoder-vs-decoder) | 🤗 [Model Collection](https://huggingface.co/jhu-clsp) | 📊 [Training Data](https://huggingface.co/datasets/jhu-clsp)
+📄 [Paper](https://arxiv.org/abs/2507.11412) | 🤗 [Model Collection](https://huggingface.co/jhu-clsp) | 📊 [Training Data](https://huggingface.co/datasets/jhu-clsp)
 
 This repository contains the first collection of paired encoder-only and decoder-only models trained with identical data, architecture, and training recipes. Ettin enables fair comparisons between encoder and decoder architectures across multiple scales, providing state-of-the-art performance for open-data models in their respective size categories.
 
@@ -41,8 +41,10 @@ This repository contains the first collection of paired encoder-only and decoder
 
 ### Installation
 ```bash
-pip install torch>=1.9.0 transformers>=4.21.0
-```
+pip install torch>=1.9.0
+# until the new pip release, install from main to use decoders (transformers>=4.54.X will contain it)
+# encoders work with transformers>=4.48.0
+pip install git+https://github.com/huggingface/transformers.git```
 
 ### 30-Second Examples
 
@@ -144,7 +146,7 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 ```
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Training Data
 
@@ -385,12 +387,14 @@ model = AutoModel.from_pretrained("jhu-clsp/ettin-encoder-150m", revision="step5
 If you use Ettin models in your research, please cite our work:
 
 ```bibtex
-@misc{weller2025seqvsseq,
+@misc{weller2025seqvsseqopen,
       title={Seq vs Seq: An Open Suite of Paired Encoders and Decoders}, 
       author={Orion Weller and Kathryn Ricci and Marc Marone and Antoine Chaffin and Dawn Lawrie and Benjamin Van Durme},
       year={2025},
-      note={Paper coming soon},
-      url={https://github.com/jhu-clsp/ettin-encoder-vs-decoder}, 
+      eprint={2507.11412},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2507.11412}, 
 }
 ```
 
