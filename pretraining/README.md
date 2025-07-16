@@ -30,8 +30,8 @@ This repository is a fork of the ModernBERT training codebase, extended with:
 - **Context Length**: Extended to 8192 tokens
 - **Learning Rate**: Continued decay from Phase 1
 
-### Phase 3: Decay Phase (100B tokens)
-- **Duration**: ~40k steps  
+### Phase 3: Decay Phase (50B tokens)
+- **Duration**: ~20k steps  
 - **Data**: Premium sources (books, academic papers, curated web content)
 - **Context Length**: Maintained at 8192 tokens
 - **Learning Rate**: Further decay with extended schedule
