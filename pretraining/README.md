@@ -47,12 +47,8 @@ This repository is a fork of the ModernBERT training codebase, extended with:
 
 ### Data Preprocessing
 **in progress, uploading soon!**
-All data preprocessing scripts and configurations are available in the [bert24 repository](https://github.com/orionw/bert24). Key preprocessing steps include:
 
-1. **Deduplication**: Near-duplicate removal across all sources
-2. **Quality Filtering**: Language detection, quality scoring, and content filtering  
-3. **Tokenization**: ModernBERT tokenizer with 50,368 vocabulary size
-4. **Sequence Packing**: Efficient packing to maximize context utilization
+All data preprocessing scripts and configurations are available in the [bert24 repository](https://github.com/orionw/bert24). Key preprocessing steps include:
 
 ## Model Configurations
 
@@ -84,8 +80,7 @@ pip install -r requirements.txt
 pip install -e .
 
 # Setup data directories
-mkdir -p data/processed
-mkdir -p checkpoints
+TODO
 ```
 
 ### Data Preparation
@@ -94,40 +89,6 @@ TODO
 
 ### Training Commands
 
-#### Start Pre-training (Phase 1)
-
-```bash
-# Encoder pre-training
-python train.py \
-    --config configs/ettin_150m_encoder.yaml \
-    --data_dir data/processed/phase1 \
-    --output_dir checkpoints/ettin-encoder-150m-phase1 \
-    --num_epochs 1 \
-    --batch_size 512 \
-    --learning_rate 6e-4
-
-# Decoder pre-training  
-python train.py \
-    --config configs/ettin_150m_decoder.yaml \
-    --data_dir data/processed/phase1 \
-    --output_dir checkpoints/ettin-decoder-150m-phase1 \
-    --num_epochs 1 \
-    --batch_size 512 \
-    --learning_rate 6e-4
-```
-
-#### Continue to Mid-training (Phase 2)
-
-```bash
-# Continue encoder training
-python train.py \
-    --config configs/ettin_150m_encoder.yaml \
-    --data_dir data/processed/phase2 \
-    --resume_from checkpoints/ettin-encoder-150m-phase1/final \
-    --output_dir checkpoints/ettin-encoder-150m-phase2 \
-    --context_length 8192 \
-    --learning_rate 3e-4
-```
 
 ## Cross-Objective Training
 
@@ -135,25 +96,7 @@ The repository also includes scripts for training cross-objective models:
 
 ### Decoder → Encoder Conversion
 
-```bash
-# Continue decoder as encoder (CLM → MLM)
-python train_cross_objective.py \
-    --source_model checkpoints/ettin-decoder-150m/final \
-    --target_objective masked_lm \
-    --output_dir checkpoints/ettin-encoder-from-decoder-150m \
-    --training_tokens 50B
-```
 
-### Encoder → Decoder Conversion
-
-```bash
-# Continue encoder as decoder (MLM → CLM)  
-python train_cross_objective.py \
-    --source_model checkpoints/ettin-encoder-150m/final \
-    --target_objective causal_lm \
-    --output_dir checkpoints/ettin-decoder-from-encoder-150m \
-    --training_tokens 50B
-```
 
 ## Hardware Requirements
 All models are trained on 4x H100s. Training time is approximately:
