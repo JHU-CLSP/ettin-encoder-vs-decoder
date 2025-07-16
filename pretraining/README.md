@@ -22,19 +22,19 @@ This repository is a fork of the ModernBERT training codebase, extended with:
 - **Duration**: ~600k steps
 - **Data**: Diverse mixture including web text, books, code, and scientific papers
 - **Context Length**: 2048 tokens initially, gradually increased
-- **Learning Rate**: Peak at 6e-4 with warmup and decay
+- **Learning Rate**: Peak after warmup
 
 ### Phase 2: Mid-training/Extension (250B tokens)  
 - **Duration**: ~100k steps
 - **Data**: Higher-quality filtered subset with domain balancing
-- **Context Length**: Extended to 8192 tokens
-- **Learning Rate**: Continued decay from Phase 1
+- **Context Length**: Extended to 8k tokens
+- **Learning Rate**: decay to half LR from Phase 1
 
 ### Phase 3: Decay Phase (50B tokens)
 - **Duration**: ~20k steps  
 - **Data**: Premium sources (books, academic papers, curated web content)
-- **Context Length**: Maintained at 8192 tokens
-- **Learning Rate**: Further decay with extended schedule
+- **Context Length**: Maintained at 8k tokens
+- **Learning Rate**: another decay to 0.02 of the LR
 
 ## Data Sources and Mixture
 
