@@ -46,6 +46,7 @@ This repository is a fork of the ModernBERT training codebase, extended with:
 - **Books**: Project Gutenberg and other open book collections
 
 ### Data Preprocessing
+**in progress, uploading soon!**
 All data preprocessing scripts and configurations are available in the [bert24 repository](https://github.com/orionw/bert24). Key preprocessing steps include:
 
 1. **Deduplication**: Near-duplicate removal across all sources
