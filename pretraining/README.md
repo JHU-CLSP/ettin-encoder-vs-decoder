@@ -155,19 +155,14 @@ python train_cross_objective.py \
 ```
 
 ## Hardware Requirements
+All models are trained on 4x H100s. Training time is approximately:
 
-### Recommended Setup
-
-| Model Size | Min GPU Memory | Recommended GPUs | Approx. Training Time |
-|:-----------|:---------------|:-----------------|:----------------------|
-| 17M        | 4GB            | 1x RTX 3070      | 2-3 days              |
-| 32M        | 6GB            | 1x RTX 3080      | 3-4 days              |
-| 68M        | 8GB            | 1x RTX 3090      | 5-6 days              |
-| 150M       | 12GB           | 1x RTX 4090      | 1-2 weeks             |
-| 400M       | 24GB           | 2x RTX 4090      | 2-3 weeks             |
-| 1B         | 40GB           | 4x A100          | 4-6 weeks             |
-
-
+1B: 2170 hours (~90 days)
+400M: 950 hours (~40 days)
+150M: 470 hours (~20 days)
+68M: 300 hours (~13 days)
+32M: 212 hours (~9 days)
+17M: 141 hours (~6 days)
 
 ## Links and Resources
 
