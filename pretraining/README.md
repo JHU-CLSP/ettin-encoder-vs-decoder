@@ -8,20 +8,16 @@ Ettin models are trained using a three-phase approach adapted from the ModernBER
 
 ## Training Repository
 
-**📖 Complete training code and detailed instructions**: [https://github.com/orionw/bert24](https://github.com/orionw/bert24)
+**📖 training code**: [https://github.com/orionw/bert24](https://github.com/orionw/bert24)
 
-This repository is a fork of the ModernBERT training codebase, extended with:
-- Decoder model support and training objectives
-- Ettin-specific configurations for all model sizes
-- Data preprocessing pipelines for the three training phases
-- Evaluation scripts for GLUE and other discriminative tasks
+That repository is a fork of the ModernBERT training codebase, extended with decoder model support and training objectives. You can just clone it and run the command when training.
 
 ## Training Phases
 
 ### Phase 1: Pre-training (1.7T tokens)
 - **Duration**: ~600k steps
 - **Data**: Diverse mixture including web text, books, code, and scientific papers
-- **Context Length**: 2048 tokens initially, gradually increased
+- **Context Length**: 1024 tokens initially, gradually increased
 - **Learning Rate**: Peak after warmup
 
 ### Phase 2: Mid-training/Extension (250B tokens)  
@@ -36,19 +32,9 @@ This repository is a fork of the ModernBERT training codebase, extended with:
 - **Context Length**: Maintained at 8k tokens
 - **Learning Rate**: another decay to 0.02 of the LR
 
-## Data Sources and Mixture
 
-### Core Data Sources
-- **DCLM (DataComp for Language Models)**: High-quality web crawl data
-- **Dolma v1.7**: Curated training corpus from AI2
-- **Scientific Papers**: ArXiv, PubMed, and academic publications
-- **Code**: GitHub repositories and programming tutorials
-- **Books**: Project Gutenberg and other open book collections
-
-### Data Preprocessing
-**in progress, uploading soon!**
-
-All data preprocessing scripts and configurations are available in the [bert24 repository](https://github.com/orionw/bert24). Key preprocessing steps include:
+## Data Preprocessing
+You can use the existing data available in Huggingface or create your own. The data should be in MosiacML `streaming` format. For (messy) scripts to do data preprocessing see the README in [Data Processing Guide](data_processing/README.md).
 
 ## Model Configurations
 
@@ -78,44 +64,37 @@ cd bert24
 # Install dependencies
 pip install -r requirements.txt
 pip install -e .
-
-# Setup data directories
-TODO
 ```
 
 ### Data Preparation
 
-TODO
+See [Data Processing Guide](data_processing/README.md) for detailed preprocessing instructions or download the data from huggingface, e.g. the [pretraining data here](https://huggingface.co/datasets/jhu-clsp/ettin-pretraining-data).
 
 ### Training Commands
+The training command will infer the number of GPUs.
 
+`composer main.py $yaml_config_file`
 
-## Cross-Objective Training
-
-The repository also includes scripts for training cross-objective models:
+You can run the cross-objective version by using those configs, which are the same but load from the opposite checkpoint. See configs/cross-train for examples
 
 ### Decoder → Encoder Conversion
-
+There are a few changes to do: (1) change the tokenizer to work like an encoder (2) change the model class to be modernbert and (3) re-combine the qkv layer. We have some messy scripts to do this and will be uploading them soon, if you need them sooner please open an issue or message us!
 
 
 ## Hardware Requirements
 All models are trained on 4x H100s. Training time is approximately:
 
-1B: 2170 hours to do 2T (~90 days, we did only ~40)
-400M: 950 hours (~40 days)
-150M: 470 hours (~20 days)
-68M: 300 hours (~13 days)
-32M: 212 hours (~9 days)
-17M: 141 hours (~6 days)
+- 1B: 2170 hours to do 2T (~90 days, we did only ~40)
+- 400M: 950 hours (~40 days)
+- 150M: 470 hours (~20 days)
+- 68M: 300 hours (~13 days)
+- 32M: 212 hours (~9 days)
+- 17M: 141 hours (~6 days)
 
 ## Links and Resources
 
 - **📖 Training Repository**: [https://github.com/orionw/bert24](https://github.com/orionw/bert24)
 - **📊 Training Data**: [HuggingFace Datasets](https://huggingface.co/datasets/jhu-clsp)
-- **🔧 Model Configs**: [Configuration Files](https://github.com/orionw/bert24/tree/main/configs)
-- **📈 Training Logs**: [Weights & Biases](https://wandb.ai/ettin-project)
-- **❓ Support**: [GitHub Issues](https://github.com/orionw/bert24/issues)
+- **🔧 Model Configs**: [Configuration Files](./pretraining/configs)
 
----
-
-For detailed implementation specifics, configuration options, and troubleshooting, please refer to the [bert24 repository documentation](https://github.com/orionw/bert24/blob/main/README.md). 
+--

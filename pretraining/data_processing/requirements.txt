@@ -1,0 +1,8 @@
+datasets
+numpy
+tokenizers
+huggingface_hub
+pyyaml
+ruff
+tqdm
+mosaicml-streaming==0.8.1

@@ -28,16 +28,10 @@ The evaluation toolkit tests how well models handle counter-stereotypical gender
 
 ```bash
 # Evaluate an encoder model
-python eval.py --model_name "your-model-name" --model_type encoder --output_path results.json
+python eval.py --model_name "jhu-clsp/ettin-encoder-17m" --model_type encoder --output_path results.json
 
 # Evaluate a decoder model  
-python eval.py --model_name "your-model-name" --model_type decoder --output_path results.json
-
-# Show failure examples
-python eval.py --model_name "your-model-name" --model_type encoder --show_failures
-
-# Test pronoun replacement logic
-python eval.py --model_name "your-model-name" --model_type encoder --test_pronouns
+python eval.py --model_name "jhu-clsp/ettin-decoder-17m" --model_type decoder --output_path results.json
 ```
 
 ### Batch Evaluation

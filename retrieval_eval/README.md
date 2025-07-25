@@ -1,10 +1,6 @@
 # Retrieval Evaluation
 
-This directory contains scripts and documentation for evaluating Ettin encoder models on retrieval tasks, including fine-tuning on MS MARCO and comprehensive evaluation on MTEB v2 English benchmarks.
-
-## Overview
-
-While Ettin encoders show strong zero-shot retrieval performance, fine-tuning on retrieval-specific data significantly improves their performance on information retrieval tasks. This guide covers the complete pipeline from MS MARCO fine-tuning to comprehensive MTEB evaluation.
+This directory contains scripts and documentation for evaluating Ettin encoder and decoder models on retrieval tasks, including fine-tuning on MS MARCO and evaluation on MTEB v2 English benchmarks.
 
 ## Quick Start
 
@@ -12,35 +8,80 @@ While Ettin encoders show strong zero-shot retrieval performance, fine-tuning on
 
 ```bash
 # Install retrieval dependencies
-pip install sentence-transformers mteb beir faiss-gpu
-
-# For training (optional)
-git clone https://github.com/orionw/bert24.git
-cd bert24
-pip install -e .
+pip install sentence-transformers mteb
 ```
 
-### Quick Evaluation Example
+
+## Training
+
+The `train_st.py` script allows you to fine-tune Ettin models (both encoder and decoder variants) on the MS MARCO dataset for retrieval tasks. The script supports both encoder-only models and decoder models with configurable pooling strategies.
+
+### Usage
 
 ```bash
-# Evaluate pre-trained Ettin encoder on MTEB
-python evaluate_mteb.py \
-    --model_name jhu-clsp/ettin-encoder-150m \
-    --output_dir results/ettin-encoder-150m-base \
-    --tasks retrieval
+python train_st.py --lr <learning_rate> --model_name <model_path> --model_out_dir <output_directory> --model_suffix <suffix> --accum_steps <steps> --bsize <batch_size> [additional_options]
 ```
 
+### Required Arguments
 
-TODO
+- `--lr`: Learning rate (float)
+- `--model_name`: Path or name of the base model to fine-tune
+- `--model_out_dir`: Directory where trained models will be saved
+- `--model_suffix`: Suffix to append to the run name for identification
+- `--accum_steps`: Number of gradient accumulation steps (int)
+- `--bsize`: Per-device training batch size (int)
 
-## Links and Resources
+### Optional Arguments
 
-- **🏆 MTEB Leaderboard**: [https://huggingface.co/spaces/mteb/leaderboard](https://huggingface.co/spaces/mteb/leaderboard)
-- **📊 MS MARCO Dataset**: [https://microsoft.github.io/msmarco/](https://microsoft.github.io/msmarco/)
-- **🔧 Sentence Transformers**: [https://www.sbert.net/](https://www.sbert.net/)
-- **📈 MTEB Framework**: [https://github.com/embeddings-benchmark/mteb](https://github.com/embeddings-benchmark/mteb)
-- **📖 Training Repository**: [https://github.com/orionw/bert24](https://github.com/orionw/bert24)
+- `--gc_bsize`: Gradient cache batch size for CachedMultipleNegativesRankingLoss (default: 64)
+- `--warmup_ratio`: Warmup ratio for learning rate scheduling (default: 0.05)
+- `--scale`: Temperature scaling parameter for the loss function (default: 20)
+- `--pooling`: Pooling strategy - choices: `lasttoken`, `mean`, `weightedmean` (default: `lasttoken`)
+- `--fp16`: Enable FP16 mixed precision training
+- `--bf16`: Enable BF16 mixed precision training
+- `--resume_training`: Resume training from checkpoint
+- `--decoder`: Use decoder model architecture instead of encoder
 
----
+### Pooling Strategies
 
-For questions about retrieval evaluation, please open an issue in the main [Ettin repository](https://github.com/jhu-clsp/ettin-encoder-vs-decoder/issues). 
+- **`lasttoken`**: Use the last token's representation (suitable for decoder models)
+- **`mean`**: Average all token representations
+- **`weightedmean`**: Weighted average of token representations
+
+### Training Examples
+
+#### Encoder Training
+```bash
+python train_st.py \
+    --lr 3e-4 \
+    --model_name "jhu-clsp/ettin-encoder-17m" \
+    --model_out_dir "./models" \
+    --model_suffix "encoder-v1" \
+    --bf16
+```
+
+#### Decoder Model Training
+```bash
+python train_st.py \
+    --lr 3e-4 \
+    --model_name "jhu-clsp/ettin-decoder-17m" \
+    --model_out_dir "./models" \
+    --model_suffix "decoder-v1" \
+    --decoder \
+    --pooling lasttoken \
+    --bf16
+```
+
+### Evaluation Examples
+Evaluation was performed with [MTEB](https://github.com/embeddings-benchmark/mteb/tree/main). Please see their documentation for more. To reproduce on MTEB v2 Eng you can use the following:
+
+```bash
+import mteb
+from sentence_transformers import SentenceTransformer
+
+# Define the sentence-transformers model name
+model_name = "path_to_your_model"
+benchmark = mteb.get_benchmark("MTEB(eng, v2)")
+evaluation = mteb.MTEB(tasks=benchmark)
+results = evaluation.run(model, output_folder=f"results/{model_name}")
+```

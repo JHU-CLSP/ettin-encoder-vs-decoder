@@ -29,26 +29,11 @@ lm_eval --model hf \
     --output_path results/ettin-encoder-150m
 ```
 
-## Supported Tasks
 
-The fork supports all standard lm-evaluation-harness tasks for encoder evaluation:
-
-### Core Tasks
-- **HellaSwag**: Commonsense reasoning
-- **ARC (Easy/Challenge)**: Science question answering  
-- **Winogrande**: Coreference resolution
-- **PIQA**: Physical commonsense reasoning
-- **BoolQ**: Boolean question answering
-
-### Additional Tasks
-- **MMLU**: Massive multitask language understanding
-- **TruthfulQA**: Truthfulness in question answering
-- **GSM8K**: Grade school math problems
-- **HumanEval**: Code generation evaluation
 
 ## Key Modifications
 
-Our fork includes several modifications to enable encoder evaluation on generative tasks, the largest that batch size must be 1. Although future could work speed this up, in practice it was fast enough to not deal with the complexity of multi-batch decoding.
+Our fork includes several modifications to enable encoder evaluation on generative tasks, the most notable being that batch size must be 1. Although future could work speed this up, in practice it was fast enough to not deal with the complexity of multi-batch decoding.
 
 ## Example Evaluation Scripts
 
@@ -156,7 +141,6 @@ done
 - **Fork Repository for Encoders**: [https://github.com/orionw/lm-evaluation-harness](https://github.com/orionw/lm-evaluation-harness)
 - **Original Harness**: [https://github.com/EleutherAI/lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness)
 - **Model Collection**: [https://huggingface.co/jhu-clsp](https://huggingface.co/jhu-clsp)
-- **Issues/Support**: [GitHub Issues](https://github.com/orionw/lm-evaluation-harness/issues)
 
 ---
 

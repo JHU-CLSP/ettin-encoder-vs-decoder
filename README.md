@@ -12,30 +12,14 @@
 This repository contains the first collection of paired encoder-only and decoder-only models trained with identical data, architecture, and training recipes. Ettin enables fair comparisons between encoder and decoder architectures across multiple scales, providing state-of-the-art performance for open-data models in their respective size categories.
 
 ## Table of Contents
-- [Performance Highlights](#-performance-highlights)
 - [Quick Start](#-quick-start)
 - [Model Family](#-model-family)
 - [Getting Started](#-getting-started)
 - [Training and Evaluation](#-training-and-evaluation)
-- [Research Applications](#-research-applications)
 - [Training Details](#training-details)
 - [FAQ](#-faq)
 - [Citation](#citation)
 
-## 📊 Performance Highlights
-
-### Encoder Tasks (vs. ModernBERT)
-- **GLUE Average**: 88.9 vs 88.4 (Base), 90.8 vs 90.4 (Large)
-- **MTEB v2 English Retrieval**: 45.7 vs 43.9 (Base), 48.4 vs 47.0 (Large)
-- **Code Search and Long Context**: Superior performance on CodeSearchNet and MLDR
-
-### Decoder Tasks (vs. SmolLM2 & Llama 3.2)
-- **Average Score**: 46.2 vs 45.2 (SmolLM2-135M)
-- **1B Model**: 59.0 vs 56.6 (Llama 3.2-1B)
-- **Generative Tasks**: Competitive across all model sizes
-
-### Key Finding
-**Architecture-specific advantages persist**: A 400M encoder outperforms a 1B decoder on classification tasks, while a 400M decoder outperforms a 1B encoder on generation tasks.
 
 ## 🚀 Quick Start
 
@@ -256,7 +240,7 @@ For details on model pre-training, data preparation, and training recipes:
 
 #### Encoder Evaluation
 - **📊 [Encoder on Generative Tasks](docs/encoder-generative-eval.md)** - Evaluating encoders on language modeling tasks using our lm-evaluation-harness fork
-- **🔍 [Encoder Retrieval Training](docs/retrieval.md)** - Fine-tuning on MS MARCO and evaluation on MTEB v2 English
+- **🔍 [Encoder Retrieval Training](retrieval_eval/README.md)** - Fine-tuning on MS MARCO and evaluation on MTEB v2 English
 - **🎯 [GLUE Evaluation](glue_evaluation/README.md)** - Comprehensive GLUE benchmark evaluation with fine-tuning scripts
 
 #### Decoder Evaluation
@@ -294,29 +278,6 @@ Ettin provides the first **controlled comparison** of encoder vs. decoder archit
 - **Multiple Scales**: Fair comparison from 17M to 1B parameters
 - **250+ Checkpoints**: Complete training trajectory analysis
 
-### Key Research Findings
-
-1. **Architecture Specialization Persists**: 
-   - Encoders excel at classification/retrieval even vs. larger decoders
-   - Decoders excel at generation even vs. larger encoders
-   - A 400M encoder beats a 1B decoder on MNLI (89.2 vs 88.2)
-
-2. **Cross-Training Limitations**: 
-   - Converting decoder→encoder or encoder→decoder underperforms
-   - 50B tokens of continued training insufficient to close gaps
-   - Native training objective remains superior
-
-3. **Scaling Insights**: 
-   - Performance gaps between architectures widen with size
-   - Decoder-from-encoder adaptation scales particularly poorly
-
-### Use Cases for Researchers
-
-- **Architecture Studies**: Compare encoder vs decoder capabilities fairly
-- **Training Dynamics**: Analyze 250+ checkpoints with batch-level data ordering  
-- **Scaling Laws**: Study how architectural advantages change with scale
-- **Transfer Learning**: Investigate cross-objective training effectiveness
-- **Replication Studies**: First open replication of ModernBERT training recipe
 
 ## Training Details
 
@@ -342,7 +303,7 @@ Ettin provides the first **controlled comparison** of encoder vs. decoder archit
 **Training Phases:**
 - **Pre-training**: 1.7T tokens with diverse data mixture
 - **Mid-training**: 250B tokens with higher-quality filtered data and context extension to 8K
-- **Decay phase**: 100B tokens with premium data sources
+- **Decay phase**: 50B tokens with premium data sources
 
 ## ❓ FAQ
 
@@ -377,7 +338,7 @@ model = AutoModel.from_pretrained("jhu-clsp/ettin-encoder-150m", revision="step5
 **Q: How do I reproduce the paper results?**
 **A:** See our evaluation guides:
 - [Encoder Generative Eval](docs/encoder-generative-eval.md)
-- [Retrieval Eval](docs/retrieval.md) 
+- [Retrieval Eval](retrieval_eval/README.md) 
 - [GLUE Eval](glue_evaluation/README.md)
 - [Decoder Eval](docs/decoder-eval.md)
 - [Pre-training](pretraining/README.md)

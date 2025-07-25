@@ -1,4 +1,4 @@
-data_local: bert24_tokenized_data
+data_local: ettin_tokenized_data
 data_remote: # If blank, files must be present in data_local
 
 max_seq_len: 1024
