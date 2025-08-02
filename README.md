@@ -112,7 +112,7 @@ These models demonstrate what happens when you continue training encoders as dec
 
 ### Accessing Training Checkpoints
 
-Beyond the final models, we provide access to intermediate training checkpoints for research and analysis purposes. All raw training checkpoints are available in the [jhu-clsp/ettin-checkpoints](https://huggingface.co/datasets/jhu-clsp/ettin-checkpoints) dataset.
+Beyond the final models, we provide access to intermediate training checkpoints for research and analysis purposes. All raw training checkpoints are available in the [jhu-clsp/ettin-checkpoints](https://huggingface.co/jhu-clsp/ettin-checkpoints) dataset.
 
 Each model repository contains multiple tagged versions representing different training stages:
 
