@@ -12,6 +12,12 @@ Ettin models are trained using a three-phase approach adapted from the ModernBER
 
 That repository is a fork of the ModernBERT training codebase, extended with decoder model support and training objectives. You can just clone it and run the command when training.
 
+### Accessing training configs
+ - prolong_decay is the final decay
+ - de_decay is the context extension
+
+Note: `bert-base-uncased` in the flex_bert config is a no-op. use `load_path` at the bottom to use the checkpoints 
+
 ## Training Phases
 
 ### Phase 1: Pre-training (1.7T tokens)
