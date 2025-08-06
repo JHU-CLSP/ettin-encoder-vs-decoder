@@ -9,10 +9,10 @@ datasets=(
 for dataset in "${datasets[@]}"
 do
     echo "Tokenizing $dataset"
-    python src/ettin_data/tokenization/tokenize_mds_subfolders.py -t answerdotai/ModernBERT-base -r $dataset -n 40
+    python src/tokenization/tokenize_mds_subfolders.py -t answerdotai/ModernBERT-base -r $dataset -n 40
     # sometimes you have to run the above multiple times and then run the below
-    python src/ettin_data/utils/compare_subfolders.py -l $dataset
-    python src/ettin_data/tokenization/move_tokenized.py $dataset --tokenizer_name olmo_space
+    python src/utils/compare_subfolders.py -l $dataset
+    python src/tokenization/move_tokenized.py $dataset --tokenizer_name olmo_space
     python ./bin/make_root.py $dataset --tokenizer_name olmo_space
     python bin/count_tokenized_tokens_from_file.py --dataset_path $dataset-tokenized --tokenizer_name olmo_space
 done

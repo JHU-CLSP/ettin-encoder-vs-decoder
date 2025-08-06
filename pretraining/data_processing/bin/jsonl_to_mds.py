@@ -12,7 +12,7 @@ import logging
 from typing import List, Dict, Any, Optional
 import math
 from pathlib import Path
-from ettin_data.utils.data_utils import MDS_COLS_TEXT
+from src.utils.data_utils import MDS_COLS_TEXT
 from streaming import MDSWriter
 
 # Setup logging

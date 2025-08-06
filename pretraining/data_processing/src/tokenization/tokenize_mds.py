@@ -4,7 +4,7 @@ import os
 import tqdm
 from transformers import AutoTokenizer, set_seed
 from streaming import StreamingDataset, MDSWriter
-from ettin_data.utils.data_utils import MDS_COLS_PRE_TOKENIZED
+from src.utils.data_utils import MDS_COLS_PRE_TOKENIZED
 import multiprocessing as mp
 from functools import partial
 import numpy as np

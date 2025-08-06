@@ -12,7 +12,7 @@ do
     # add -tokenized to the end
     dataset="$dataset-tokenized"
     echo "Chunking $dataset"
-    python src/ettin_data/sampling/split_dataset_into_chunks.py -s $dataset -c 8192 -m 512 -a 32 --batch_size 1000 --backfill --backfill_no_duplicates --num_processes 40 --add_eos_token --reverse
+    python src/sampling/split_dataset_into_chunks.py -s $dataset -c 8192 -m 512 -a 32 --batch_size 1000 --backfill --backfill_no_duplicates --num_processes 40 --add_eos_token --reverse
 done
 
 ## after run:
